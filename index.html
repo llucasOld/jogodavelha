@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+    <style>
+        .board{
+            display: grid;
+            grid-template-columns: repeat(3, 150px);
+            grid-template-rows: repeat(3, 150px);
+            gap: 15px;
+            padding-top: 20px;
+            margin-left: 20px;
+            background-color: blueviolet;
+            height: 640px;
+            width: 76%;
+        }
+
+        .cell{
+            background-color: blue;
+            border: 3px solid #2a2a38;
+            align-items: center;
+            cursor: pointer;
+            font-family: sans-serif;
+            
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Velha</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@700&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+
+    <h1>Jogo da Velha</h1>
+
+    <div class="img.jpg">
+        <img src="" alt="">
+    </div>
+
+    <div class="board" id="board">
+        <div class="cell" onclick="cellClicked(0)"></div>
+        <div class="cell" onclick="cellClicked(1)"></div>
+        <div class="cell" onclick="cellClicked(2)"></div>
+        <div class="cell" onclick="cellClicked(3)"></div>
+        <div class="cell" onclick="cellClicked(4)"></div>
+        <div class="cell" onclick="cellClicked(5)"></div>
+        <div class="cell" onclick="cellClicked(6)"></div>
+        <div class="cell" onclick="cellClicked(7)"></div>
+        <div class="cell" onclick="cellClicked(8)">
+        </div>
+    </div>
+
+    <script>
+        let currerPlayer = 'X';
+        let board = ['','','','','','','','','']
+
+        function cellClicked(index) {
+            if (board[index] === '') {
+                board[index] = currentPlayer;
+                document.getElementById('board').children[index].innerText = currerPlayer;
+                checkWinner();
+                currentPlayer = currentPlayer === 'x' ? 'o' : 'x';
+            }
+        }
+
+        function checkWinner() {
+            const winConditions = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]
+            ];
+
+            for (let codition of winConditions) {
+                const [a, b, c] = codition;
+                if (board[a] !== '' && board[a] === board[b] && board[a] === board[c]) {
+                    alert(`JOGADOR ${board[a]} VENCEU!`);
+                    resetBoard();
+                    return;
+                }
+            }
+
+            if (!board.includes('')) {
+                alert('EMPATE!');
+                resetBoard();
+
+                function resetBoard() {
+                    currentPlayer = 'X';
+                    board = ['', '', '', '', '', '', '', '', ''];
+                    for (let i = 0; i < 9; i++) {
+                        document.getElementById('board').children[i].innerText = '';
+                    }
+                }
+            }
+        }
+    </script>
+    
+
+
+    <div id="text">
+        <section class="flex">
+        <h2>JOGUINHO DA VELHA</h2>
+        </section>
+    </div>
+
+    <div>
+        <h3>Jogo da velha é jogado em um grid 3x3, com um jogador sendo 'X' e outro 'O'. Cada um marca um espaço vazio por vez, buscando alinhar três de seus símbolos.</h3>
+        <br>
+        <h3>Para vencer, alinhe verticalmente, horizontalmente ou diagonalmente seus símbolos antes do seu adversário. Esteja atento para bloquear o adversário se ele estiver perto de vencer.</h3>
+        <br>
+        <h3>Se o grid encher sem nenhum alinhamento, o jogo termina em empate, conhecido como "velha". A estratégia é tão importante quanto a sorte.</h3>
+    </div>
+
+    <footer>
+        desenvolvido por: Lucas Oliveira 13/03/24
+    </footer>
+    
+</body>
+</html>
